@@ -1,12 +1,12 @@
 #include<iostream>
 #include<string.h>
 #include<conio.h>
-//welcome to our project
-//lets goo
+#include <map>
 #define max 100
-//and here we go
-using namespace std;
 
+
+using namespace std;
+ map<int,int> mp;
 //Class Customer
 class Customer
 {
@@ -20,13 +20,11 @@ float payment_advance;
 int booking_id;
 };
 
-
-class Room
-{
+class Room{
 public:
-char type;
-char stype;
-char ac;
+string type;
+string stype;
+string ac;
 int roomNumber;
 int rent;
 int status;
@@ -40,19 +38,44 @@ void displayRoom(Room);
 
 //Global Declarations
 class Room rooms[max];
-int count=0;
+int cnt=0;
 
 
-Room Room::addRoom(int rno)
-{
+Room Room::addRoom(int rno){
 class Room room;
 room.roomNumber=rno;
+
+while(1){
 cout<<"\nType AC/Non-AC (A/N) : ";
 cin>>room.ac;
+if(room.ac.size() == 1 && (room.ac[0] == 'A' || room.ac[0] == 'N')){
+    break;
+}
+else if(room.ac.size() != 1 ||(room.ac[0] != 'A' || room.ac[0] != 'N')){
+    cout<<"Enter a single character i.e either 'A' or 'N'"<<endl;
+}
+}
+while(1){
 cout<<"\nType Comfort (S/N) : ";
 cin>>room.type;
+if(room.type.size() == 1 && (room.type[0] == 'S' || room.type[0] == 'N')){
+    break;
+}
+else if(room.type.size() != 1 ||(room.type[0] != 'S' || room.type[0] != 'N')){
+    cout<<"Enter a single character i.e either 'S' or 'N'"<<endl;
+}
+}
+
+while(1){
 cout<<"\nType Size (B/S) : ";
 cin>>room.stype;
+if(room.stype.size() == 1 && (room.stype[0] == 'B' || room.stype[0] == 'S')){
+    break;
+}
+else if(room.stype.size() != 1 ||(room.stype[0] != 'B' || room.stype[0] != 'S')){
+    cout<<"Enter a single character i.e either 'B' or 'S'"<<endl;
+}
+}
 cout<<"\nDaily Rent : ";
 cin>>room.rent;
 room.status=0;
@@ -66,7 +89,7 @@ return room;
 void Room::searchRoom(int rno)
 {
 int i,found=0;
-for(i=0;i<count;i++)
+for(i=0;i<cnt;i++)
 {
 if(rooms[i].roomNumber==rno)
 {
@@ -118,10 +141,10 @@ void guestSummaryReport();
 
 void HotelMgnt::guestSummaryReport(){
 
-if(count==0){
+if(cnt==0){
 	cout<<"\n No Guest in Hotel !!";
 }	
-for(int i=0;i<count;i++)
+for(int i=0;i<cnt;i++)
 {
 if(rooms[i].status==1)
 {
@@ -129,7 +152,9 @@ cout<<"\n Customer First Name : "<<rooms[i].cust.name;
 cout<<"\n Room Number : "<<rooms[i].roomNumber;
 cout<<"\n Address (only city) : "<<rooms[i].cust.address;
 cout<<"\n Phone : "<<rooms[i].cust.phone;
-cout<<"\n---------------------------------------";	
+cout<<"\n Check-in Date : "<<rooms[i].cust.from_date;
+cout<<"\n Check-out Date : "<<rooms[i].cust.to_date;
+cout<<"\n---------------------------------------\n";	
 }
 	
 }
@@ -145,7 +170,7 @@ int i,found=0,rno;
 class Room room;
 cout<<"\nEnter Room number : ";
 cin>>rno;
-for(i=0;i<count;i++)
+for(i=0;i<cnt;i++)
 {
 if(rooms[i].roomNumber==rno)
 {
@@ -164,6 +189,12 @@ return;
 
 cout<<"\nEnter booking id: ";
 cin>>rooms[i].cust.booking_id;
+  while (mp[rooms[i].cust.booking_id] == 1)
+		{
+			cout << "This booking ID is already taken pls enter some other booking ID\n";
+			cin >> rooms[i].cust.booking_id;
+		}
+		mp[rooms[i].cust.booking_id] = 1;
 
 cout<<"\nEnter Customer Name (First Name): ";
 cin>>rooms[i].cust.name;
@@ -186,7 +217,7 @@ cin>>rooms[i].cust.payment_advance;
 
 rooms[i].status=1;
 
-cout<<"\n Customer Checked-in Successfully..";
+cout<<"\n Customer Checked-in Successfully... \n";
 getch();
 }
 }
@@ -196,7 +227,7 @@ getch();
 void HotelMgnt::getAvailRoom()
 {
 int i,found=0;
-for(i=0;i<count;i++)
+for(i=0;i<cnt;i++)
 {
 if(rooms[i].status==0)
 {
@@ -213,19 +244,19 @@ getch();
 }
 }
 
-
 //hotel management shows all persons that have booked room
 void HotelMgnt::searchCustomer(char *pname)
 {
+// O(N)
 int i,found=0;
-for(i=0;i<count;i++)
+for(i=0;i<cnt;i++)
 {
 if(rooms[i].status==1 && stricmp(rooms[i].cust.name,pname)==0)
 {
 cout<<"\nCustomer Name: "<<rooms[i].cust.name;
 cout<<"\nRoom Number: "<<rooms[i].roomNumber;
 
-cout<<"\n\nPress enter for next record";
+cout<<"\n\nPress Enter for next record\n";
 found=1;
 getch();
 }
@@ -243,7 +274,7 @@ void HotelMgnt::checkOut(int roomNum)
 {
 int i,found=0,days,rno;
 float billAmount=0;
-for(i=0;i<count;i++)
+for(i=0;i<cnt;i++)
 {
 if(rooms[i].status==1 && rooms[i].roomNumber==roomNum)
 {
@@ -298,7 +329,7 @@ case 1:
 cout<<"\nEnter Room Number: ";
 cin>>rno;
 i=0;
-for(i=0;i<count;i++)
+for(i=0;i<cnt;i++)
 {
 if(rooms[i].roomNumber==rno)
 {
@@ -313,8 +344,8 @@ getch();
 }
 else
 {
-rooms[count]=room.addRoom(rno);
-count++;
+rooms[cnt]=room.addRoom(rno);
+cnt++;
 }
 break;
 case 2:
@@ -360,7 +391,7 @@ case 1:
 manageRooms();
 break;
 case 2:
-if(count==0)
+if(cnt==0)
 {
 cout<<"\nRooms data is not available.\nPlease add the rooms first.";
 getch();
@@ -369,7 +400,7 @@ else
 hm.checkIn();
 break;
 case 3:
-if(count==0)
+if(cnt==0)
 {
 cout<<"\nRooms data is not available.\nPlease add the rooms first.";
 getch();
@@ -378,7 +409,7 @@ else
 hm.getAvailRoom();
 break;
 case 4:
-if(count==0)
+if(cnt==0)
 {
 cout<<"\nRooms are not available.\nPlease add the rooms first.";
 getch();
@@ -391,7 +422,7 @@ hm.searchCustomer(pname);
 }
 break;
 case 5:
-if(count==0)
+if(cnt==0)
 {
 cout<<"\nRooms are not available.\nPlease add the rooms first.";
 getch();
