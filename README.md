@@ -14,8 +14,8 @@ This is a simple hotel management system implemented in C++. It allows users to 
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/hotel-management.git`
-2. Navigate to the project directory: `cd hotel-management`
+1. Clone the repository: `git clone https://github.com/TompeHarshavardhan/hotelManagement.git`
+2. Navigate to the project directory: `cd hotelManagement`
 
 ## Usage
 
