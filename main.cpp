@@ -4,6 +4,7 @@
 #include <map>
 #define max 100
 
+
 using namespace std;
  map<int,int> mp;
 //Class Customer
