@@ -4,6 +4,7 @@
 //welcome to our project
 //lets goo
 #define max 100
+//and here we go
 using namespace std;
 
 //Class Customer
