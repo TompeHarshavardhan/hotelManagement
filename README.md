@@ -26,7 +26,7 @@ This is a simple hotel management system implemented in C++. It allows users to 
 
 This project was collaborated on by three members:
 
-- Shreyash Bhanage
+- Shreyash S. Bhanage
 - Aditya Kharmale
 - Harshavardhan Tompe
 
